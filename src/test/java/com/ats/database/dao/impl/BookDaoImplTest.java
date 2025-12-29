@@ -1,8 +1,9 @@
 package com.ats.database.dao.impl;
 
-import static com.ats.database.TestDataUtil.createTestBook;
+import static com.ats.database.TestDataUtil.createTestBookA;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentMatchers;
@@ -12,7 +13,11 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.ats.database.domain.Book;
 
+import java.util.List;
+
 // unit test
+// since unit test only checks individual components, all other services are mocked.
+// no instance of spring boot is spun up.
 @ExtendWith(MockitoExtension.class)
 public class BookDaoImplTest {
     @Mock
@@ -23,7 +28,7 @@ public class BookDaoImplTest {
 
     @Test
     public void createTest() {
-        Book book = createTestBook();
+        Book book = createTestBookA();
 
         underTest.create(book);
 
@@ -47,10 +52,17 @@ public class BookDaoImplTest {
 
     @Test
     public void readManyTest() {
+        List<Book> result = underTest.read();
+
+        verify(jdbcTemplate).query(
+                eq("select * from books;"),
+                ArgumentMatchers.<BookDaoImpl.BookRowMapper>any()
+        );
     }
 
     @Test
     public void updateTest() {
+
     }
 
     @Test

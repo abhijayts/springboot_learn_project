@@ -12,7 +12,9 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class BookDaoImpl implements BookDao{
-    private JdbcTemplate jdbcTemplate;
+    private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<Book> rowMapper = new BookRowMapper();
+
     public BookDaoImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
@@ -24,16 +26,21 @@ public class BookDaoImpl implements BookDao{
 
     @Override
     public Optional<Book> read(String isbn) {
-        List<Book> res = jdbcTemplate.query("select * from books where isbn = ?;", new BookRowMapper(), isbn);
+        List<Book> res = jdbcTemplate.query("select * from books where isbn = ?;", rowMapper, isbn);
         return res.stream().findFirst();
     }
 
     @Override
-    public void update() {
+    public List<Book> read() {
+        return jdbcTemplate.query("select * from books;", rowMapper);
     }
 
     @Override
-    public void delete() {
+    public void update(Book book) {
+    }
+
+    @Override
+    public void delete(String isbn) {
     }
 
     public static class BookRowMapper implements RowMapper<Book> {

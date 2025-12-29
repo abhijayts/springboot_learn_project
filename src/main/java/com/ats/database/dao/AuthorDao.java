@@ -8,6 +8,6 @@ public interface AuthorDao {
     void create(Author author);
     Optional<Author> read(int id); //read one
     List<Author> read(); // read many
-    void update();
-    void delete();
+    void update(int id, String name, int age, int prevId);
+    void delete(int id);
 }

@@ -47,4 +47,9 @@ public class AuthorImplIntegrationTest {
         assertThat(result).hasSize(3).containsExactly(authorA, authorB, authorC);
     }
 
+    @Test
+    public void testAuthorUpdate() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+    }
+
 }

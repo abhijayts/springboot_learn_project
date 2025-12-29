@@ -62,7 +62,15 @@ public class BookDaoImplTest {
 
     @Test
     public void updateTest() {
+        underTest.update("2A", "my story", 1, "1A");
 
+        verify(jdbcTemplate).update(
+                eq("update books set isbn = ?, title = ?, author_id = ? where isbn = ?;"),
+                eq("2A"),
+                eq("my story"),
+                eq(1),
+                eq("1A")
+        );
     }
 
     @Test

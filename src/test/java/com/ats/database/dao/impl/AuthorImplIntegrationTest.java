@@ -50,6 +50,13 @@ public class AuthorImplIntegrationTest {
     @Test
     public void testAuthorUpdate() {
         Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.create(authorA);
+        underTest.update(2, "abhijayts", 22, 1);
+        authorA.setId(2);
+        authorA.setName("abhijayts");
+        Optional<Author> result = underTest.read(authorA.getId());
+        assertThat(result).isPresent();
+        assertThat(result.get()).isEqualTo(authorA);
     }
 
 }

@@ -59,4 +59,12 @@ public class AuthorImplIntegrationTest {
         assertThat(result.get()).isEqualTo(authorA);
     }
 
+    @Test
+    public void testAuthorDelete() {
+        Author authorA = TestDataUtil.createTestAuthorA();
+        underTest.create(authorA);
+        underTest.delete(authorA.getId());
+        Optional<Author> result = underTest.read(authorA.getId());
+        assertThat(result).isEmpty();
+    }
 }

@@ -75,5 +75,11 @@ public class BookDaoImplTest {
 
     @Test
     public void deleteTest() {
+        underTest.delete("1A");
+
+        verify(jdbcTemplate).update(
+                eq("delete from books where isbn = ?;"),
+                eq("1A")
+        );
     }
 }

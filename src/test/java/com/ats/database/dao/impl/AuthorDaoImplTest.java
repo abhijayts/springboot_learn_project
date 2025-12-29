@@ -65,7 +65,7 @@ public class AuthorDaoImplTest {
         Author authorA = createTestAuthorA();
         underTest.update(2, "abhijayts", 22, 1);
         verify(jdbcTemplate).update(
-                eq("update authors set author_id = ?, name = ?, age = ? where id = ?;"),
+                eq("update authors set id = ?, name = ?, age = ? where id = ?;"),
                 eq(2),
                 eq("abhijayts"),
                 eq(22),
@@ -74,5 +74,12 @@ public class AuthorDaoImplTest {
     }
 
     @Test
-    public void deleteTest() {}
+    public void deleteTest() {
+        Author authorA = createTestAuthorA();
+        underTest.delete(authorA.getId());
+        verify(jdbcTemplate).update(
+                eq("delete from authors where id = ?;"),
+                eq(authorA.getId())
+        );
+    }
 }

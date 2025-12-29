@@ -44,6 +44,7 @@ public class AuthorDaoImpl implements AuthorDao {
 
     @Override
     public void delete(int id) {
+        jdbcTemplate.update("delete from authors where id = ?;", id);
     }
 
     public static class AuthorRowMapper implements RowMapper<Author> {
